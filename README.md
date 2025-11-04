@@ -1,13 +1,17 @@
 # Safer Polymorphing
 
-Ideally, your allies and homing projectiles won't turn on you when you get polymorphed. But it doesn't work.
+Improves the polymorph experience by making it so your allies and homing projectiles won't betray you, probably.
 
-The idea is to change the polymorph target's faction to one that's a hybrid of the friendliest relations between the player and what you polymorphed into, and also remove the tags "homing" and "enemy" from the polymorph target.
+This works by making a new faction and filling its relations stats with the best of Player and the polymorph target. This means you won't lose the friendliness from your allies, rats (plage rats perk), or your polymorph target faction. It doesn't mean those things can't hurt you.
 
-I've since found out that you probably can't use ModTextFileSetContent() outside of init but it's failing before that so... We'll get there when we get there.
-
-I'll probably just do OnModPostInit() and copy every single faction into poly_$faction. csv bloat fr fr, exponential growth yipee
+Untested in multiplayer but it'll probably work fine.
 
 ## Installation instructions
 
- - Don't, it doesn't work.
+ - Click the [Download ZIP button](https://github.com/Mamumimi/safer_polymorphing/archive/refs/heads/main.zip)
+ - Extract into your Noita mods folder: '.../Steam/steamapps/common/Noita/mods/'
+ - Make sure the folder with the mod files is called: 'safer_polymorphing'
+ - Filepath to init.lua should be: '.../Noita/mods/safer_polymorphing/init.lua'
+ - Enable the mod in Noita's mod menu.
+
+Not yet on Steam Workshop: [Safer Polymorphing](https://github.com/Mamumimi/safer_polymorphing/archive/refs/heads/main.zip)
