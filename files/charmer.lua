@@ -13,7 +13,6 @@ local player_id = EntityGetClosestWithTag( pos_x, pos_y, "polymorphed_player" ) 
 if player_id then
     local genome_component = EntityGetFirstComponentIncludingDisabled( player_id, "GenomeDataComponent")
     if genome_component then --Copies relations from from_faction to poly_player. Definitely not the best way to code this but I just think it's neat.
-        local from_faction = ComponentGetValue2(genome_component, "herd_id")
         local genomeCSV = ModTextFileGetContent("data/genome_relations.csv")
         local lines = split_string(genomeCSV, "\r\n")
         local genome2D = {} -- The whole chart in one 2d table, available via y,x coords.
@@ -29,13 +28,13 @@ if player_id then
             local cell = genome2D[y][1]:match("^%s*(.*)") -- trim the leading spaces or else lookup fails.
             row[cell] = y -- going vertically (y++) on x==1
         end
-        GamePrint("Parsing fails around here")
+        local from_faction = genome2D[1][ComponentGetValue2(genome_component, "herd_id")+2] -- The GetValue here gets the index and not the name. Also, the index starts at -1... This took hours to figure out because I am a fool.
         for x=2, #genome2D[1] do -- replace poly_player row with from_faction row, skipping the faction name.
+---@diagnostic disable-next-line: param-type-mismatch
             genome2D[row["poly_player"]][x] = math.max(tonumber(genome2D[row["player"]][x]), tonumber(genome2D[row[from_faction]][x])) -- Use the higher of player/from_faction relations so relations never decrease
-            GamePrint("g2dx iter")
         end
-        GamePrint("This print is never reached")
         for y=2, #genome2D do -- replace poly_player column with from_faction column, skipping the faction name.
+---@diagnostic disable-next-line: param-type-mismatch
             genome2D[y][column["poly_player"]] = math.max(tonumber(genome2D[y][column["player"]]), tonumber(genome2D[y][column[from_faction]])) -- Use the higher of player/from_faction relations so relations never decrease
         end -- This is the important one, the vertical columns are what enemies think of poly_player.
         local output,output_lines = "",{}
@@ -47,7 +46,7 @@ if player_id then
         ComponentSetValue2(genome_component, "herd_id", StringToHerdId("poly_player"))
         EntityRemoveTag(player_id, "homing_target")
         EntityRemoveTag(player_id, "enemy")
+        --print("Player polymorphed into "..from_faction.."! Here's the new relations table:\n"..output..\n)
     end
 end
-
 EntityKill( applier_id )
