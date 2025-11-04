@@ -1,0 +1,5 @@
+<Mod
+	name="Safer Polymorphing"
+	description="Allies and your homing projectiles won't target you when you're polymorphed. Probably."
+	request_no_api_restrictions="0" 
+/>

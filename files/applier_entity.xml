@@ -1,0 +1,4 @@
+<Entity>
+	<LuaComponent script_source_file="mods/safer_polymorphing/files/charmer.lua"/>
+	<LifetimeComponent lifetime="2"/> <!--Added to make sure the entity dies even if the script fails-->
+</Entity>
