@@ -2,11 +2,11 @@
 
 Improves the polymorph experience by making it so your allies and homing projectiles won't betray you, probably.
 
-Not currently working as intended, because I tried using ModTextFileSetContent() outside of init. Instead I will need to duplicate every faction via OnModPostInit() into poly_$faction and hot-swap the poly'd player between them.
+Not currently working as intended, because I tried using ModTextFileSetContent() outside of init. Instead I will need to duplicate every faction via OnModPostInit() into poly_$faction and hot-swap the poly'd player between them. An extra faction will likely have to be made for plague rats and any modded functions that increase player-faction relations.
 
-This works by making a new faction and filling its relations stats with the best of Player and the polymorph target. This means you won't lose the friendliness from your allies, rats (plage rats perk), or your polymorph target faction. It doesn't mean those things can't hurt you.
+This was supposed to work by making a new faction and filling its relations stats with the best of Player and the polymorph target dynamically. This meant you wouldn't lose the friendliness from your allies, rats (plage rats perk), or your polymorph target faction. It doesn't mean those things can't hurt you.
 
-There's a slight caveat with the homing safety: your projectiles will home in on you for 1 frame. This shouldn't be a problem unless you stack homing modifiers.
+There's a slight caveat with the homing safety: your projectiles will home in on you for 1 frame. This shouldn't be a problem unless you stack homing modifiers or use projectile area teleport. Maybe I'll look into this later.
 
 Untested in multiplayer but it'll probably work fine.
 
