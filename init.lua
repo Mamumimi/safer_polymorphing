@@ -1,25 +1,25 @@
-function OnPlayerSpawned(player_id)
-    local luaHomunculusComponents = EntityGetComponent(player_id, "LuaComponent", "homunculus_type")
-    if luaHomunculusComponents then
-        for _,component in ipairs(luaHomunculusComponents) do
-            if ComponentGetValue2(component,"script_polymorphing_to") == "mods/safer_polymorphing/files/applier_entity_spawner.lua"
-                then
-                --GamePrintImportant("Already applied, skipping")
-                return
-            end
-        end
+function OnPlayerSpawned(player_id) -- Only give the player the script if they don't already have the script. Works if enabled mid-run.
+  local luaHomunculusComponents = EntityGetComponent(player_id, "LuaComponent", "homunculus_type")
+  if luaHomunculusComponents then
+    for _, component in ipairs(luaHomunculusComponents) do
+      if ComponentGetValue2(component, "script_polymorphing_to") == "mods/safer_polymorphing/files/applier_entity_spawner.lua"
+      then
+        --GamePrintImportant("Already applied, skipping")
+        return
+      end
     end
-    --GamePrintImportant("Not found, initializing now")
-    EntityAddComponent2( player_id, "LuaComponent", {
-        execute_every_n_frame=-1,
-        script_polymorphing_to="mods/safer_polymorphing/files/applier_entity_spawner.lua",
-        _tags="homunculus_type"
-    })
+  end
+  --GamePrintImportant("Not found, initializing now")
+  EntityAddComponent2(player_id, "LuaComponent", {
+    execute_every_n_frame = -1,
+    script_polymorphing_to = "mods/safer_polymorphing/files/applier_entity_spawner.lua",
+    _tags = "homunculus_type"
+  })
 end
 
 function OnModPostInit() -- I probably don't need to put this here but I'm gonna anyway because why not?
-  -- Shamefully copied from More Enemies and Bosses  
-  function split_string(inputstr, sep)
+  -- Shamefully copied from More Enemies and Bosses
+  function split_string(inputstr, sep) -- Splits inputstr into a table. New index every time sep is matched.
     sep = sep or "%s"
     local t = {}
     for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
@@ -30,7 +30,7 @@ function OnModPostInit() -- I probably don't need to put this here but I'm gonna
 
   local content = ModTextFileGetContent("data/genome_relations.csv")
   --print("Here's the default genome:\n"..content.."\n")
-  function add_new_genome(content, genome_name, default_relation_ab, default_relation_ba, self_relation, relations)
+  function add_new_genome(content, genome_name, default_relation_ab, default_relation_ba, self_relation, relations) -- Thanks Keith
     local lines = split_string(content, "\r\n")
     local output = ""
     local genome_order = {}
